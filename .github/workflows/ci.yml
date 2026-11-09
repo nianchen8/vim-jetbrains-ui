@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Vim ${{ matrix.vim }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        vim:
+          - v9.2.0000
+          - stable
+          - nightly
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          version: ${{ matrix.vim }}
+
+      - name: Lint
+        run: ./test/lint.sh
+
+      - name: Unit and integration tests
+        run: ./test/run.sh
+
+      - name: Coverage gate
+        if: matrix.vim == 'stable'
+        run: ./test/coverage.sh
+
+  external-integrations:
+    name: Optional plugin integrations
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          version: stable
+
+      - name: Install integration fixtures
+        run: |
+          git clone --depth 1 https://github.com/bfrg/vim-cpp-modern.git "$RUNNER_TEMP/vim-cpp-modern"
+          git clone --depth 1 --branch release https://github.com/neoclide/coc.nvim.git "$RUNNER_TEMP/coc.nvim"
+
+      - name: Run tests with external plugins
+        env:
+          JB_CPP_RUNTIME: ${{ runner.temp }}/vim-cpp-modern
+          JB_COC_RUNTIME: ${{ runner.temp }}/coc.nvim
+        run: ./test/run.sh
