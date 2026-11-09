@@ -43,37 +43,23 @@ for (const entry of fs.readdirSync(profileDir).sort()) {
   if (!entry.endsWith('.log')) continue;
   const lines = fs.readFileSync(path.join(profileDir, entry), 'utf8').split('\n');
   let section = null;
-  let sectionExecuted = 0;
-
-  const finishFunction = () => {
-    if (section && section.type === 'function') {
-      const previous = functionHits.get(section.name) || 0;
-      functionHits.set(section.name, Math.max(previous, sectionExecuted));
-    }
-  };
 
   for (const line of lines) {
     const script = line.match(/^SCRIPT\s+(.+)$/);
     if (script) {
-      finishFunction();
       section = { type: 'script', path: script[1] };
-      sectionExecuted = 0;
       continue;
     }
 
     const fn = line.match(/^FUNCTION\s+(.+)$/);
     if (fn) {
-      finishFunction();
       const name = fn[1];
       section = { type: 'function', name };
-      sectionExecuted = 0;
       continue;
     }
 
     if (line.startsWith('FUNCTIONS SORTED')) {
-      finishFunction();
       section = null;
-      sectionExecuted = 0;
       continue;
     }
 
@@ -88,10 +74,12 @@ for (const entry of fs.readdirSync(profileDir).sort()) {
       const map = scriptLines.get(file);
       map.set(timed[2], Math.max(map.get(timed[2]) || 0, Number(timed[1])));
     } else {
-      if (Number(timed[1]) > 0) sectionExecuted += 1;
+      if (Number(timed[1]) > 0) {
+        if (!functionHits.has(section.name)) functionHits.set(section.name, new Set());
+        functionHits.get(section.name).add(timed[2]);
+      }
     }
   }
-  finishFunction();
 }
 
 let totalCovered = 0;
@@ -116,7 +104,7 @@ for (const file of targets) {
     });
     if (matchingCall) {
       coveredNames += 1;
-      covered += functionHits.get(matchingCall);
+      covered += functionHits.get(matchingCall).size;
     }
   }
 

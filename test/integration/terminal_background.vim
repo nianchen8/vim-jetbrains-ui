@@ -8,6 +8,12 @@ let g:jb_test_terminal_background_emitted = []
 let g:JBTestTerminalBackgroundEmitter = {
       \ sequence -> add(g:jb_test_terminal_background_emitted, sequence) }
 
+let g:colors_name = 'jb'
+call jb#ui#handle_terminal_response('background')
+call jb#ui#handle_color_scheme()
+call jb#ui#restore_terminal_background()
+call assert_equal([], g:jb_test_terminal_background_emitted)
+
 let s:original_t_rb = &t_RB
 let g:jb_test_terminal_background_response = ''
 let &t_RB = "\e]11;?\e\\"

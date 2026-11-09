@@ -51,6 +51,16 @@ call assert_match('leadmultispace: ', s:ascii)
 call assert_match('space:.', s:ascii)
 call assert_match('trail: ', s:ascii)
 call assert_match('tab:> ', s:ascii)
+let s:ascii_line = jb#ui#build_listchars(
+      \ jb#ui#normalize_config({'markers': 'ascii', 'tab': 'line'}))
+let s:ascii_none = jb#ui#build_listchars(
+      \ jb#ui#normalize_config({'markers': 'ascii', 'tab': 'none'}))
+call assert_match('tab:- ', s:ascii_line)
+call assert_match('tab:  ', s:ascii_none)
+call assert_match(
+      \ 'space:·',
+      \ jb#ui#build_listchars(
+      \   jb#ui#normalize_config({'markers': 'unicode'})))
 call assert_match(
       \ 'conceal:…',
       \ jb#ui#build_listchars(jb#ui#normalize_config({'extra': 'conceal:…'})))
