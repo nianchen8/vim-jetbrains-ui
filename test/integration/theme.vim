@@ -17,4 +17,10 @@ colorscheme jb
 call assert_equal('light', &background)
 call assert_equal('#FFFFFF', JBTestAttr('Normal', 'bg'))
 
+let g:jb_style = 'dark'
+let g:jb_enable_unicode = 1
+colorscheme jb
+call assert_match('vert:│', &fillchars)
+call assert_equal('┃', g:gitgutter_sign_added)
+
 call JBTestFinish()
