@@ -1,4 +1,5 @@
 set nocompatible
+set encoding=utf-8
 set termguicolors
 silent! filetype plugin indent on
 silent! syntax on
