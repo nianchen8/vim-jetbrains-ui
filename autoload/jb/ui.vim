@@ -38,10 +38,16 @@ function! s:use_unicode_markers(config) abort
   elseif l:mode ==# 'unicode'
     return 1
   endif
-  return &encoding ==# 'utf-8' &&
-        \ tolower(get(v:, 'ctype', '')) =~# 'utf-\=8' &&
-        \ strwidth('·') == 1 &&
-        \ strwidth('→') == 1
+
+  let l:original = &listchars
+  try
+    let &listchars = 'space:·,tab:→' . "\u00a0"
+    return 1
+  catch /^Vim\%((\a\+)\)\=:E\%(474\|1512\):/
+    return 0
+  finally
+    let &listchars = l:original
+  endtry
 endfunction
 
 function! s:blank_marker(unicode) abort
