@@ -1,170 +1,224 @@
 <div align="center">
-    </br>
     <img src="assets/logo.png" width="75" alt="Logo"/>
     <h3>JB for Vim</h3>
-    <p> A set of colour schemes for Vim, inspired by Jetbrains' IDEs.</p>
+    <p>JetBrains editor visual compatibility for traditional Vim.</p>
+    <p><strong>Version 0.1.0 · Pre-release</strong></p>
 </div>
 
 ![Theme Screenshot](assets/screenshot.png)
 
-
-Features
+Version
 ---------------------------------------------------------------------------
 
-**Familiar Look**
+This repository is a maintained derivative of
+[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.1.0`
+establishes the current JetBrains editor-visual baseline.
 
-Not only are the colours accurate to the default JetBrains themes, they 
-also attempt to emulate the original colour hierarchy. For instance, JSON
-keywords are highlighted in the `Constant` colour, not the keyword colour.
-This of course is limited by the available highlight groups in Vim, and
-even with [vim-polyglot](https://github.com/sheerun/vim-polyglot) it is
-not possible to get an exact match, so expect a best-effort outcome.
+The palette was checked against the IntelliJ Platform 2026.3 editor source.
+The project targets traditional Vim and has been tested with Vim 9.2.
 
-**Multiple Palettes**
+See [CHANGELOG.md](CHANGELOG.md) for the exact scope of this version.
 
-Three palette options are packaged: 
-- `dark`: Uses the colours from the 'Dark' JetBrains theme
-- `light`: For those who prefer a light theme, follows the 'Light' theme
-- `mid`: A bonus theme - The `dark` palette with a lighter background
+Highlights
+---------------------------------------------------------------------------
 
-**Bring Your Own Colours**
-
-Any of the palette colours can be overridden. See 
-[Configuration](#configuration) or
-[:help g:jb_color_overrides](doc/jb.txt) for how to
-implement your own colours.
-Highlight groups can also be modified in an autoload group to change
-the look of the plugin.
-
-**Semantic language syntax highlighting**
-
-Includes more in depth highlighting rules, ported from the original
-themes, in accordance with the highlight groups of the language syntax
-packs in [vim-polyglot](https://github.com/sheerun/vim-polyglot). It is
-recommended you install polyglot alongside this colorscheme for the best
-highlighting.
-
-**Truecolor, cterm, and italic support**
-
-Whilst built with true colours in mind, vim-jb's schemes also support 256
-colour terminals. You can also opt-in to italics if your terminal emulator
-supports them. See [Configuration](#configuration) or 
-[:help jb-configuration](doc/jb.txt) for more details.
-
-**Plugins out the box**
-
-Includes highlight links for popular Vim plugins such as GitGutter,
-NERDTree, ALE, FZF, Fugitive, and more. For those without included groups,
-the `JB*` top-level highlight groups in the plugin configuration allow for 
-easy and clear custom mapping in a `.vimrc` that won't affect other
-schemes. See [colors/jb.vim](colors/jb.vim) for the groups.
-
+- Current JetBrains Dark, Light and Mid syntax palettes.
+- Current editor background, caret row, selection, search and line-number
+  colours.
+- Configurable JetBrains-style spaces, tabs, non-breaking spaces and right
+  margin.
+- Configurable soft wrapping for Markdown and text files.
+- Current Markdown code block, inline code and blockquote styling.
+- Italic documentation comments and constants.
+- Highlight links for GitGutter, NERDTree, FZF, ALE, Coc, Fern, Fugitive and
+  other common Vim plugins.
+- Truecolor, 256-colour, italic and Unicode support.
+- Palette-level colour overrides.
 
 Installation
 ---------------------------------------------------------------------------
 
-Using [vim-plug](https://github.com/junegunn/vim-plug) (or your package
-manager of choice):
+Install this repository with vim-plug:
 
 ```vim
-Plug 'devsjc/vim-jb'
+Plug '~/Projects/vim-jb'
 ```
 
+For a different checkout location, replace the path with the absolute path to
+this repository. The plugin is intentionally installed as a local Vim plugin;
+it is not loaded from a second copy under `~/.vim/plugged`.
 
-Usage
+A complete example:
+
+```vim
+call plug#begin('~/.vim/plugged')
+Plug '~/Projects/vim-jb'
+
+let g:jb_style = 'dark'
+let g:jb_enable_italic = 1
+let g:jb_enable_unicode = 1
+let g:jb_whitespace = {
+      \ 'enabled': 1,
+      \ 'leading': 1,
+      \ 'inner': 1,
+      \ 'trailing': 1,
+      \ 'nbsp': 1,
+      \ 'tab': 'arrow',
+      \ }
+let g:jb_soft_wrap = {
+      \ 'enabled': 1,
+      \ 'filetypes': ['markdown', 'text'],
+      \ 'showbreak': '↳ ',
+      \ }
+let g:jb_right_margin = 120
+
+call plug#end()
+
+if has('termguicolors')
+  set termguicolors
+endif
+colorscheme jb
+```
+
+Configuration options must be set before the plugin is loaded. With vim-plug,
+place them before `call plug#end()`.
+
+Whitespace controls
 ---------------------------------------------------------------------------
 
-Place the following line at the bottom of your `.vimrc`:
+JetBrains exposes leading, inner, trailing and selection whitespace as separate
+settings. Vim can reproduce the first three independently through `listchars`.
+Selection-only whitespace control is not available in Vim's native renderer.
 
 ```vim
-colorscheme jb
+let g:jb_whitespace = {
+      \ 'enabled': 1,
+      \ 'leading': 1,
+      \ 'inner': 1,
+      \ 'trailing': 1,
+      \ 'nbsp': 1,
+      \ 'tab': 'arrow',
+      \ }
 ```
 
+Supported tab styles:
 
-Configuration
---------------------------------------------------------------------------
+- `arrow`: `→ `
+- `triangle`: `▸ `
+- `line`: `─ `
+- `none`: hidden marker
 
-*Note*: All configuration must be placed before the `colorscheme jb` line.
-Further configuration details can be found via
-[:help jb-configuration](doc/jb.txt).
-
-**Choosing the style**
-
-The style is set with `g:jb_style` variable. For instance:
+Runtime commands:
 
 ```vim
-let g:jb_style='mid'
-colorscheme jb
+:JBWhitespaceOn
+:JBWhitespaceOff
+:JBWhitespaceToggle
+:JBWhitespaceStatus
 ```
 
-**Enabling italics**
+Editor helpers
+---------------------------------------------------------------------------
 
-If your terminal emulator supports italics, opt in using
+The companion plugin configures the current-line highlight, a right margin and
+optional soft wrapping:
 
 ```vim
-let g:jb_enable_italics=1
-colorscheme jb
+let g:jb_cursorline = 1
+let g:jb_right_margin = 120
+let g:jb_soft_wrap = {
+      \ 'enabled': 1,
+      \ 'filetypes': ['markdown', 'text'],
+      \ 'showbreak': '↳ ',
+      \ }
 ```
 
-**Enabling Unicode**
+See `:help jb-configuration` after generating help tags for the complete option
+reference.
 
-If your terminal emulator/font support unicode, opt in using
+Colour overrides
+---------------------------------------------------------------------------
+
+Pick a category from [autoload/palettes.json](autoload/palettes.json) and
+override its GUI and terminal colours:
 
 ```vim
-let g:jb_enable_unicode=1
-colorscheme jb
+let g:jb_color_overrides = {
+      \ 'keyword': {'gui': '#ff00ff', 'cterm': 201},
+      \ 'type': {'gui': '#00ff00', 'cterm': 46},
+      \ }
 ```
 
-**Modifying a color**
-
-To choose your own colour, pick a category from the
-[palettes](autoload/palettes.json) file, and define your overrides in a
-dictionary containing your replacement `gui` and `cterm` colours:
+Highlight links can be replaced from a `ColorScheme` autocmd:
 
 ```vim
-let g:jb_color_overrides={
-    \"keyword": {"gui": "#ff00ff", "cterm": "16"}
-    \}
-```
-
-You can also change highlight groups, overriding what is set in the plugin.
-Say you prefer how Android Studio uses the `Type` colour for Kotlin
-structures, instead of the less saturated `Keyword` of IntelliJ Idea.
-Simply add the following overrides in an `augroup` in your `.vimrc`:
-
-```vim
-augroup JBHiglights
+augroup JBHighlights
     autocmd!
     autocmd ColorScheme * highlight link ktStructure Type
 augroup END
 ```
 
-This must be placed in an `augroup` to prevent vim-jb from overriding it.
-
-Related Projects
----------------------------------------------------------------------------
-
-- Iterm2 themes: [terminals-jb](https://github.com/devsjc/terminals-jb)
-- Kitty themes: [terminals-jb](https://github.com/devsjc/terminals-jb)
-
-
-Contribution and support
----------------------------------------------------------------------------
-
-Enjoy the theme? Give it a star on GitHub! Feel free to create pull
-requests with any new highlight rules that have been missed.
-
 Testing
 ---------------------------------------------------------------------------
 
-Run the unit and integration suites:
+Run all unit and integration tests:
 
 ```sh
 ./test/run.sh
 ```
 
-Run the Vim profiler and enforce the line/function coverage gate:
+Run Vim's profiler and enforce the coverage gate:
 
 ```sh
 ./test/coverage.sh
 ```
+
+Version `0.1.0` test status:
+
+```text
+Unit suites:          1
+Integration suites:   5
+Profiled line cover:  98.8%
+Function coverage:    100% (14/14)
+Coverage gate:        >= 95% lines and 100% functions
+```
+
+The coverage report uses Vim's built-in `+profile` feature. Branch coverage is
+not claimed because Vim does not provide a reliable native branch-coverage
+report.
+
+Compatibility and limitations
+---------------------------------------------------------------------------
+
+- Target: traditional Vim; Vim 9.2 is the tested environment.
+- Neovim is not a supported target for this release.
+- Truecolor is recommended. A 256-colour fallback remains available.
+- Terminal fonts, ligatures, line height and cursor animation are controlled by
+  the terminal emulator, not by this plugin.
+- Vim cannot independently toggle whitespace only inside a visual selection.
+- U+3000 ideographic spaces cannot be rendered through native `listchars`.
+- Space dots and tab arrows are terminal glyph approximations of JetBrains'
+  vector renderer.
+- Indent guides, sticky lines and breadcrumbs require additional plugins or a
+  future renderer layer.
+- Smooth caret movement and animated scrolling cannot be provided by a Vim
+  colour scheme.
+
+The detailed feature boundary is recorded in
+[doc/editor-parity.md](doc/editor-parity.md).
+
+Upstream
+---------------------------------------------------------------------------
+
+- Original project: <https://github.com/devsjc/vim-jb>
+- Git remote name: `upstream`
+- Current local branch: `main`
+
+Related terminal themes:
+
+- [terminals-jb](https://github.com/devsjc/terminals-jb)
+
+License
+---------------------------------------------------------------------------
+
+MIT. See [LICENSE](LICENSE).
