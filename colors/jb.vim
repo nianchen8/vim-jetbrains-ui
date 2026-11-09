@@ -89,8 +89,8 @@ call s:h("JBKeyword", { "fg": s:colors.keyword }) " Keywords
 call s:h("JBFunction", { "fg": s:colors.function }) " Functions (calls and definitions)
 call s:h("JBComment", { "fg": s:colors.comment }) " Comment text
 call s:h("JBCommentRef", { "fg": s:colors.commentref }) " References within comments e.g. to classes
-call s:h("JBDocComment", { "fg": s:colors.doccomment }) " Documentation comments
-call s:h("JBConstant", { "fg": s:colors.const }) " Constants
+call s:h("JBDocComment", { "fg": s:colors.doccomment, "gui": "italic", "cterm": "italic" }) " Documentation comments
+call s:h("JBConstant", { "fg": s:colors.const, "gui": "italic", "cterm": "italic" }) " Constants
 call s:h("JBType", { "fg": s:colors.type }) " Types
 call s:h("JBTag", { "fg": s:colors.tag }) " Tags
 call s:h("JBMatchedBracket", { "fg": s:colors.text, "bg": s:colors.matchedbrace, "gui": "bold", "cterm": "bold" }) " Matching brackets
@@ -104,6 +104,7 @@ call s:h("JBWhitespace", { "fg": s:colors.whitespace }) " Spaces, tabs and white
 call s:h("JBIndentGuide", { "fg": s:colors.indentguide }) " Indentation guides
 call s:h("JBRightMargin", { "bg": s:colors.rightmargin }) " Right margin / visual guide
 call s:h("JBSearchCurrent", { "bg": s:colors.searchcurrent }) " Current search result
+call s:h("JBCodeBlock", { "fg": s:colors.text, "bg": s:colors.codeblock }) " Markdown code block/span
 
 " Diff and Merge
 call s:h("JBDiffAddedLine", { "bg": s:colors.diffadd }) " Newly inserted lines in diff
@@ -284,28 +285,28 @@ highlight! link jsonKeyword Constant
 highlight! link jsonBoolean Keyword
 
 " --- Markdown ---
-highlight! link markdownCode String
-highlight! link markdownCodeBlock String
-highlight! link markdownCodeDelimiter String
-highlight! link markdownBlockQuote String
+highlight! link markdownCode JBCodeBlock
+highlight! link markdownCodeBlock JBCodeBlock
+highlight! link markdownCodeDelimiter JBCodeBlock
+highlight! link markdownBlockQuote JBCodeBlock
 highlight! link markdownListMarker Keyword
 highlight! link markdownOrderedListMarker Keyword
 highlight! link markdownRule Comment
-highlight! link markdownH1 Const
-highlight! link markdownH2 Const
-highlight! link markdownH3 Const
-highlight! link markdownH4 Const
-highlight! link markdownH5 Const
-highlight! link markdownH6 Const
-highlight! link markdownHeadingRule Const
+highlight! link markdownH1 Title
+highlight! link markdownH2 Title
+highlight! link markdownH3 Title
+highlight! link markdownH4 Title
+highlight! link markdownH5 Title
+highlight! link markdownH6 Title
+highlight! link markdownHeadingRule Title
 highlight! link markdownUrl JBHyperlink
 highlight! link markdownUrlDelimiter JBHyperlink
 
 " --- Markdown (vim-markdown/polyglot) ---
-highlight! link mkdCode String
-highlight! link mkdSnippetSHELL String
+highlight! link mkdCode JBCodeBlock
+highlight! link mkdSnippetSHELL JBCodeBlock
 highlight! link mkdURL JBHyperlink
-highlight! link mkdHeading Const
+highlight! link mkdHeading Title
 
 " --- Javascript (vim-javascript/polyglot) ---
 highlight! link jsDecorator Tag
@@ -400,7 +401,7 @@ let g:fzf_colors = {
       \ 'pointer': ['fg', 'Function'],
       \ 'marker': ['fg', 'Function'],
       \ 'spinner': ['fg', 'Warning'],
-      \ 'header': ['fg', 'Const']
+      \ 'header': ['fg', 'Title']
       \ }
 
 
