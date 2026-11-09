@@ -7,7 +7,7 @@ call assert_equal('1', JBTestAttr('JBDocComment', 'italic'))
 call assert_equal('1', JBTestAttr('JBConstant', 'italic'))
 
 enew
-setlocal filetype=markdown
+silent! setlocal filetype=markdown
 call setline(1, ['# Heading', '`inline`'])
 
 call assert_equal('#303235', JBTestAttr('markdownCode', 'bg'))

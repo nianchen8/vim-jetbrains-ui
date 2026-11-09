@@ -16,14 +16,14 @@ call assert_equal(0, &cursorline)
 call assert_equal('120', &colorcolumn)
 
 enew
-setlocal filetype=markdown
+silent! setlocal filetype=markdown
 call assert_equal(1, &l:wrap)
 call assert_equal(1, &l:linebreak)
 call assert_equal(1, &l:breakindent)
 call assert_equal('↳ ', &l:showbreak)
 
 enew
-setlocal filetype=python
+silent! setlocal filetype=python
 call assert_equal(0, &l:linebreak)
 call assert_equal('', &l:showbreak)
 
