@@ -136,3 +136,45 @@ function! jb#ui#status() abort
         \ s:flag(l:config, 'nbsp'),
         \ get(l:config, 'tab', 'arrow'))
 endfunction
+
+function! s:normalize_hex_component(value) abort
+  if strlen(a:value) >= 2
+    return tolower(strpart(a:value, 0, 2))
+  endif
+  return tolower(repeat(a:value, 2))
+endfunction
+
+function! jb#ui#parse_terminal_background(response) abort
+  if type(a:response) != v:t_string || empty(a:response)
+    return ''
+  endif
+
+  let l:rgb = matchlist(
+        \ a:response,
+        \ '\c]11;rgb:\(\x\+\)/\(\x\+\)/\(\x\+\)')
+  if !empty(l:rgb)
+    return '#' .
+          \ s:normalize_hex_component(l:rgb[1]) .
+          \ s:normalize_hex_component(l:rgb[2]) .
+          \ s:normalize_hex_component(l:rgb[3])
+  endif
+
+  let l:hex = matchlist(a:response, '\c]11;#\(\x\{6}\)')
+  if !empty(l:hex)
+    return '#' . tolower(l:hex[1])
+  endif
+
+  return ''
+endfunction
+
+function! jb#ui#terminal_background_sequence(color) abort
+  return "\<Esc>]11;" . a:color . "\<Esc>\\"
+endfunction
+
+function! jb#ui#terminal_background_update(target, response) abort
+  let l:original = jb#ui#parse_terminal_background(a:response)
+  if empty(l:original) || a:target ==? l:original
+    return ''
+  endif
+  return jb#ui#terminal_background_sequence(a:target)
+endfunction
