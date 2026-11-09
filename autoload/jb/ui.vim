@@ -31,27 +31,31 @@ function! s:flag(config, key) abort
   return get(a:config, a:key, 0) ? 1 : 0
 endfunction
 
+function! s:blank_marker() abort
+  return "\u00a0"
+endfunction
+
 function! s:tab_marker(config) abort
   if get(a:config, 'tab', 'arrow') ==# 'triangle'
-    return '▸ '
+    return '▸' . s:blank_marker()
   elseif get(a:config, 'tab', 'arrow') ==# 'line'
-    return '─ '
+    return '─' . s:blank_marker()
   elseif get(a:config, 'tab', 'arrow') ==# 'none'
-    return '  '
+    return s:blank_marker() . s:blank_marker()
   endif
-  return '→ '
+  return '→' . s:blank_marker()
 endfunction
 
 function! jb#ui#build_listchars(config) abort
   let l:dot = get(a:config, 'space_char', '·')
   let l:tab = s:tab_marker(a:config)
   let l:items = [
-        \ 'leadmultispace:' . (s:flag(a:config, 'leading') ? l:dot : ' '),
-        \ 'space:' . (s:flag(a:config, 'inner') ? l:dot : ' '),
-        \ 'trail:' . (s:flag(a:config, 'trailing') ? l:dot : ' '),
-        \ 'leadtab:' . (s:flag(a:config, 'leading') ? l:tab : '  '),
-        \ 'tab:' . (s:flag(a:config, 'inner') ? l:tab : '  '),
-        \ 'nbsp:' . (s:flag(a:config, 'nbsp') ? get(a:config, 'nbsp_char', '␣') : ' '),
+        \ 'leadmultispace:' . (s:flag(a:config, 'leading') ? l:dot : s:blank_marker()),
+        \ 'space:' . (s:flag(a:config, 'inner') ? l:dot : s:blank_marker()),
+        \ 'trail:' . (s:flag(a:config, 'trailing') ? l:dot : s:blank_marker()),
+        \ 'leadtab:' . (s:flag(a:config, 'leading') ? l:tab : s:blank_marker() . s:blank_marker()),
+        \ 'tab:' . (s:flag(a:config, 'inner') ? l:tab : s:blank_marker() . s:blank_marker()),
+        \ 'nbsp:' . (s:flag(a:config, 'nbsp') ? get(a:config, 'nbsp_char', '␣') : s:blank_marker()),
         \ 'extends:' . get(a:config, 'extends', '›'),
         \ 'precedes:' . get(a:config, 'precedes', '‹'),
         \ ]
