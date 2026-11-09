@@ -15,7 +15,9 @@ augroup JBEditorUI
   autocmd ColorScheme * call jb#ui#apply()
   autocmd ColorScheme * call jb#ui#handle_color_scheme()
   autocmd FileType * call jb#ui#apply_buffer()
-  autocmd TermResponseAll * call jb#ui#handle_terminal_response(expand('<amatch>'))
+  if exists('##TermResponseAll')
+    autocmd TermResponseAll * call jb#ui#handle_terminal_response(expand('<amatch>'))
+  endif
   autocmd VimLeavePre * call jb#ui#restore_terminal_background()
   autocmd VimSuspend * call jb#ui#restore_terminal_background()
   autocmd VimResume * call jb#ui#handle_color_scheme()

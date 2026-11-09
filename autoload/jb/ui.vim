@@ -212,6 +212,7 @@ function! s:can_manage_terminal_background() abort
   endif
   return !has('gui_running') &&
         \ exists('*echoraw') &&
+        \ exists('&t_RB') &&
         \ $TERM !=# 'dumb'
 endfunction
 
@@ -227,7 +228,7 @@ function! jb#ui#configure_terminal_background(target) abort
   endif
   let l:response = s:terminal_response()
   if empty(l:response)
-    if !empty(&t_RB)
+    if exists('&t_RB') && !empty(&t_RB)
       call s:terminal_emit(&t_RB)
     endif
     return ''
