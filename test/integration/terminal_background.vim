@@ -29,11 +29,11 @@ let g:colors_name = 'jb'
 call jb#ui#handle_terminal_response('background')
 call jb#ui#handle_terminal_response('foreground')
 call assert_equal(
-      \ ["\e]11;?\e\\", "\e]11;#1E1F22\e\\", "\e]11;#1E1F22\e\\"],
+      \ ["\e]11;?\e\\", "\e]11;#1E1F22\e\\"],
       \ g:jb_test_terminal_background_emitted)
 
 call jb#ui#handle_color_scheme()
-call assert_equal(4, len(g:jb_test_terminal_background_emitted))
+call assert_equal(2, len(g:jb_test_terminal_background_emitted))
 
 let g:colors_name = 'other'
 call jb#ui#handle_color_scheme()
@@ -42,7 +42,7 @@ call assert_equal(
       \ g:jb_test_terminal_background_emitted[-1])
 
 call jb#ui#restore_terminal_background()
-call assert_equal(5, len(g:jb_test_terminal_background_emitted))
+call assert_equal(3, len(g:jb_test_terminal_background_emitted))
 
 unlet g:jb_test_terminal_background_response
 unlet g:jb_test_terminal_background_emitted
