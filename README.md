@@ -67,6 +67,7 @@ let g:jb_whitespace = {
       \ 'trailing': 1,
       \ 'nbsp': 1,
       \ 'tab': 'arrow',
+      \ 'markers': 'unicode',
       \ }
 let g:jb_soft_wrap = {
       \ 'enabled': 1,
@@ -102,6 +103,7 @@ let g:jb_whitespace = {
       \ 'trailing': 1,
       \ 'nbsp': 1,
       \ 'tab': 'arrow',
+      \ 'markers': 'unicode',
       \ }
 ```
 
@@ -111,6 +113,10 @@ Supported tab styles:
 - `triangle`: `▸ `
 - `line`: `─ `
 - `none`: hidden marker
+
+`markers` defaults to `ascii` for predictable rendering. Set it to `unicode`
+on terminals that support single-width `·`, `→`, `␣`, `›` and `‹`, or to
+`auto` to probe support dynamically.
 
 Runtime commands:
 

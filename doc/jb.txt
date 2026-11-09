@@ -184,6 +184,7 @@ markers only inside a selection.
       trailing      Trailing spaces
       nbsp          Non-breaking spaces
       tab           `arrow`, `triangle`, `line`, or `none`
+      markers       `ascii`, `unicode`, or `auto`
       space_char    Marker used for spaces
       nbsp_char     Marker used for non-breaking spaces
       extends       Marker for text extending past the window

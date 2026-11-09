@@ -8,6 +8,7 @@ function! jb#ui#defaults() abort
         \ 'trailing': 1,
         \ 'nbsp': 1,
         \ 'tab': 'arrow',
+        \ 'markers': 'ascii',
         \ 'space_char': '·',
         \ 'nbsp_char': '␣',
         \ 'extends': '›',
