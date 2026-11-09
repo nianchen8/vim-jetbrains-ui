@@ -13,7 +13,7 @@ for test_file in "$repo_root"/test/unit/*.vim "$repo_root"/test/integration/*.vi
   [[ -f "$test_file" ]] || continue
   test_name="$(basename "$test_file" .vim)"
   profile_file="$coverage_dir/$test_name.log"
-  vim -Nu NONE -i NONE -n -es \
+  vim -Nu NONE -i NONE -n -X -es \
     --cmd "profile start $profile_file" \
     --cmd 'profile func *' \
     --cmd 'profile file *' \
