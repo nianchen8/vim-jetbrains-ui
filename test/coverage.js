@@ -97,14 +97,20 @@ for (const file of targets) {
 
   for (const entry of functions) {
     total += entry.bodyLines.length;
-    const matchingCall = [...functionHits.keys()].find((called) => {
+    const matchingCalls = [...functionHits.keys()].filter((called) => {
       return called
         .replace(/\(\)$/, '')
         .replace(/^<SNR>\d+_/, '') === entry.name;
     });
-    if (matchingCall) {
+    if (matchingCalls.length > 0) {
       coveredNames += 1;
-      covered += functionHits.get(matchingCall).size;
+      const coveredLines = new Set();
+      for (const matchingCall of matchingCalls) {
+        for (const line of functionHits.get(matchingCall)) {
+          coveredLines.add(line);
+        }
+      }
+      covered += coveredLines.size;
     }
   }
 

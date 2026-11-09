@@ -7,6 +7,7 @@ call assert_equal(1, s:defaults.inner)
 call assert_equal(1, s:defaults.trailing)
 call assert_equal(1, s:defaults.nbsp)
 call assert_equal('arrow', s:defaults.tab)
+call assert_equal('ascii', s:defaults.markers)
 
 call assert_equal(0, jb#ui#normalize_config(0).enabled)
 call assert_equal(1, jb#ui#normalize_config('invalid').enabled)
@@ -61,6 +62,9 @@ let s:ascii_none = jb#ui#build_listchars(
       \ jb#ui#normalize_config({'markers': 'ascii', 'tab': 'none'}))
 call assert_match('tab:- ', s:ascii_line)
 call assert_match('tab:  ', s:ascii_none)
+let s:auto = jb#ui#build_listchars(
+      \ jb#ui#normalize_config({'markers': 'auto'}))
+call assert_match('space:', s:auto)
 call assert_match(
       \ 'space:·',
       \ jb#ui#build_listchars(
