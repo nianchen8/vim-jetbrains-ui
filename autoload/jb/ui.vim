@@ -63,3 +63,40 @@ function! jb#ui#build_listchars(config) abort
 
   return join(l:items, ',')
 endfunction
+
+function! jb#ui#get_config() abort
+  return jb#ui#normalize_config(get(g:, 'jb_whitespace', {}))
+endfunction
+
+function! jb#ui#apply() abort
+  let l:config = jb#ui#get_config()
+  if s:flag(l:config, 'enabled')
+    set list
+    let &listchars = jb#ui#build_listchars(l:config)
+  else
+    set nolist
+  endif
+endfunction
+
+function! jb#ui#set(key, value) abort
+  let l:config = jb#ui#get_config()
+  let l:config[a:key] = a:value
+  let g:jb_whitespace = l:config
+  call jb#ui#apply()
+endfunction
+
+function! jb#ui#toggle() abort
+  call jb#ui#set('enabled', !s:flag(jb#ui#get_config(), 'enabled'))
+endfunction
+
+function! jb#ui#status() abort
+  let l:config = jb#ui#get_config()
+  echo printf(
+        \ 'jb whitespace: enabled=%d leading=%d inner=%d trailing=%d nbsp=%d tab=%s',
+        \ s:flag(l:config, 'enabled'),
+        \ s:flag(l:config, 'leading'),
+        \ s:flag(l:config, 'inner'),
+        \ s:flag(l:config, 'trailing'),
+        \ s:flag(l:config, 'nbsp'),
+        \ get(l:config, 'tab', 'arrow'))
+endfunction
