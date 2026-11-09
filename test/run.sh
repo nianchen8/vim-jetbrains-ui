@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-export LC_ALL="${LC_ALL:-C.UTF-8}"
+export LC_ALL=C.UTF-8
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 

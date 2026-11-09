@@ -14,6 +14,8 @@ jobs:
   test:
     name: Vim ${{ matrix.vim }}
     runs-on: ubuntu-24.04
+    env:
+      LC_ALL: C.UTF-8
     strategy:
       fail-fast: false
       matrix:
@@ -46,6 +48,8 @@ jobs:
   external-integrations:
     name: Optional plugin integrations
     runs-on: ubuntu-24.04
+    env:
+      LC_ALL: C.UTF-8
     steps:
       - uses: actions/checkout@v4
 

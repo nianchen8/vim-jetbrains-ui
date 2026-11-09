@@ -39,6 +39,7 @@ function! s:use_unicode_markers(config) abort
     return 1
   endif
   return &encoding ==# 'utf-8' &&
+        \ tolower(get(v:, 'ctype', '')) =~# 'utf-\=8' &&
         \ strwidth('·') == 1 &&
         \ strwidth('→') == 1
 endfunction
