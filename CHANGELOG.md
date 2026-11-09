@@ -2,6 +2,28 @@
 
 All notable changes to this project are documented here.
 
+## [0.3.1] - 2026-11-09
+
+Remote CI compatibility release.
+
+### Fixed
+
+- Add Vim 9.1 support with capability checks for OSC terminal events.
+- Use a portable ASCII `listchars` fallback on older Vim builds and
+  non-Unicode terminal environments.
+- Keep Unicode markers as an explicit opt-in for Termux and compatible
+  terminals.
+- Avoid X display connection attempts during headless CI tests.
+- Correct cross-process coverage aggregation for script-local functions.
+- Validate the complete Unicode `listchars` set before selecting it.
+
+### Verified
+
+- GitHub Actions passes for Vim 9.1, 9.2, stable and nightly.
+- C++ and Coc external integration jobs pass.
+- 96.6% profiled line coverage.
+- 100% function coverage (27/27).
+
 ## [0.3.0] - 2026-11-09
 
 Terminal background synchronization.

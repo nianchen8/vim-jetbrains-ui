@@ -1,8 +1,8 @@
 <div align="center">
     <img src="assets/logo.png" width="75" alt="Logo"/>
-    <h3>JB for Vim</h3>
+    <h3>Vim JetBrains UI</h3>
     <p>JetBrains editor visual compatibility for traditional Vim.</p>
-    <p><strong>Version 0.3.0 · L4 pre-release baseline</strong></p>
+    <p><strong>Version 0.3.1 · L4 pre-release baseline</strong></p>
 </div>
 
 ![Theme Screenshot](assets/screenshot.png)
@@ -10,8 +10,9 @@
 Version
 ---------------------------------------------------------------------------
 
-This repository is a maintained derivative of
-[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.3.0`
+This is the public fork
+[`nianchen8/vim-jetbrains-ui`](https://github.com/nianchen8/vim-jetbrains-ui)
+of [`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.3.1`
 establishes the L4 engineering baseline: cross-version CI, compatibility
 testing, visual contracts, external plugin integration, terminal background
 synchronization and release metadata.
@@ -44,18 +45,17 @@ Installation
 Install this repository with vim-plug:
 
 ```vim
-Plug '~/Projects/vim-jb'
+Plug 'nianchen8/vim-jetbrains-ui'
 ```
 
-For a different checkout location, replace the path with the absolute path to
-this repository. The plugin is intentionally installed as a local Vim plugin;
-it is not loaded from a second copy under `~/.vim/plugged`.
+For local development, replace the plugin argument with the absolute path to
+your checkout.
 
 A complete example:
 
 ```vim
 call plug#begin('~/.vim/plugged')
-Plug '~/Projects/vim-jb'
+Plug 'nianchen8/vim-jetbrains-ui'
 
 let g:jb_style = 'dark'
 let g:jb_enable_italic = 1
@@ -184,13 +184,13 @@ Run Vim's profiler and enforce the coverage gate:
 ./test/coverage.sh
 ```
 
-Version `0.3.0` test status:
+Version `0.3.1` test status:
 
 ```text
 Unit suites:          2
-Integration suites:   12
-Profiled line cover:  95.9%
-Function coverage:    100% (25/25)
+Integration suites:   13
+Profiled line cover:  96.6%
+Function coverage:    100% (27/27)
 Coverage gate:        >= 95% lines and 100% functions
 ```
 
@@ -201,8 +201,8 @@ report.
 Compatibility and limitations
 ---------------------------------------------------------------------------
 
-- Target: traditional Vim; Vim 9.2 is the tested environment.
-- CI compatibility matrix: Vim `v9.2.0000`, stable and nightly.
+- Target: traditional Vim; Vim 9.1 or newer.
+- CI compatibility matrix: Vim `v9.1.0000`, `v9.2.0000`, stable and nightly.
 - Neovim is not a supported target for this release.
 - Truecolor is recommended. A 256-colour fallback remains available.
 - Terminal fonts, ligatures, line height and cursor animation are controlled by
@@ -224,7 +224,8 @@ The detailed feature boundary is recorded in
 Upstream
 ---------------------------------------------------------------------------
 
-- Original project: <https://github.com/devsjc/vim-jb>
+- Published fork: <https://github.com/nianchen8/vim-jetbrains-ui>
+- Parent project: <https://github.com/devsjc/vim-jb>
 - Git remote name: `upstream`
 - Current local branch: `main`
 
