@@ -41,6 +41,16 @@ call assert_match(
 call assert_match(
       \ "tab:\u00a0\u00a0",
       \ jb#ui#build_listchars(jb#ui#normalize_config({'tab': 'none'})))
+let s:ascii = jb#ui#build_listchars(
+      \ jb#ui#normalize_config({
+      \   'leading': 0,
+      \   'trailing': 0,
+      \   'markers': 'ascii',
+      \ }))
+call assert_match('leadmultispace: ', s:ascii)
+call assert_match('space:.', s:ascii)
+call assert_match('trail: ', s:ascii)
+call assert_match('tab:> ', s:ascii)
 call assert_match(
       \ 'conceal:…',
       \ jb#ui#build_listchars(jb#ui#normalize_config({'extra': 'conceal:…'})))
