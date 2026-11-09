@@ -13,6 +13,7 @@ This document defines the L4 acceptance criteria for this repository.
 | Compatibility | Vim 9.2, stable and nightly CI matrix | Configured |
 | Colour modes | Truecolor and 256-colour fallback | Pass |
 | External plugins | `vim-cpp-modern` and Coc | Pass locally |
+| Terminal background | OSC 11 apply and restore lifecycle | Pass |
 | Release metadata | `VERSION`, README, CHANGELOG and Git tag | Pass |
 | License | Repository-level MIT license | Pass |
 | CI | GitHub Actions test and integration jobs | Configured |
@@ -28,6 +29,7 @@ This document defines the L4 acceptance criteria for this repository.
 | Vim nightly | Forward compatibility | Not installed | Configured |
 | Vim + `vim-cpp-modern` | External syntax compatibility | Pass | Configured |
 | Vim + Coc | Completion plugin highlight compatibility | Pass | Configured |
+| Termux OSC 11 | Background synchronization and restore | Pass by fake emitter tests | Device verification |
 
 The workflow cannot be executed remotely until the local repository has a
 GitHub `origin`. Until then, its commands are covered by the equivalent local

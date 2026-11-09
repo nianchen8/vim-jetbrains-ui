@@ -2,7 +2,7 @@
     <img src="assets/logo.png" width="75" alt="Logo"/>
     <h3>JB for Vim</h3>
     <p>JetBrains editor visual compatibility for traditional Vim.</p>
-    <p><strong>Version 0.2.0 · L4 pre-release baseline</strong></p>
+    <p><strong>Version 0.3.0 · L4 pre-release baseline</strong></p>
 </div>
 
 ![Theme Screenshot](assets/screenshot.png)
@@ -11,9 +11,10 @@ Version
 ---------------------------------------------------------------------------
 
 This repository is a maintained derivative of
-[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.2.0`
+[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.3.0`
 establishes the L4 engineering baseline: cross-version CI, compatibility
-testing, visual contracts, external plugin integration and release metadata.
+testing, visual contracts, external plugin integration, terminal background
+synchronization and release metadata.
 
 The palette was checked against the IntelliJ Platform 2026.3 editor source.
 The project targets traditional Vim and has been tested with Vim 9.2.
@@ -31,6 +32,7 @@ Highlights
 - Configurable soft wrapping for Markdown and text files.
 - Current Markdown code block, inline code and blockquote styling.
 - Italic documentation comments and constants.
+- Optional OSC 11 terminal background synchronization with automatic restore.
 - Highlight links for GitGutter, NERDTree, FZF, ALE, Coc, Fern, Fugitive and
   other common Vim plugins.
 - Truecolor, 256-colour, italic and Unicode support.
@@ -72,6 +74,7 @@ let g:jb_soft_wrap = {
       \ 'showbreak': '↳ ',
       \ }
 let g:jb_right_margin = 120
+let g:jb_manage_terminal_background = 1
 
 call plug#end()
 
@@ -127,6 +130,7 @@ optional soft wrapping:
 ```vim
 let g:jb_cursorline = 1
 let g:jb_right_margin = 120
+let g:jb_manage_terminal_background = 1
 let g:jb_soft_wrap = {
       \ 'enabled': 1,
       \ 'filetypes': ['markdown', 'text'],
@@ -174,13 +178,13 @@ Run Vim's profiler and enforce the coverage gate:
 ./test/coverage.sh
 ```
 
-Version `0.2.0` test status:
+Version `0.3.0` test status:
 
 ```text
-Unit suites:          1
-Integration suites:   11
-Profiled line cover:  98.6%
-Function coverage:    100% (14/14)
+Unit suites:          2
+Integration suites:   12
+Profiled line cover:  95.9%
+Function coverage:    100% (25/25)
 Coverage gate:        >= 95% lines and 100% functions
 ```
 
@@ -197,6 +201,8 @@ Compatibility and limitations
 - Truecolor is recommended. A 256-colour fallback remains available.
 - Terminal fonts, ligatures, line height and cursor animation are controlled by
   the terminal emulator, not by this plugin.
+- Terminal background synchronization requires OSC 11 support. Unsupported
+  terminals are left unchanged.
 - Vim cannot independently toggle whitespace only inside a visual selection.
 - U+3000 ideographic spaces cannot be rendered through native `listchars`.
 - Space dots and tab arrows are terminal glyph approximations of JetBrains'

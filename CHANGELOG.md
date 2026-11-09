@@ -2,6 +2,35 @@
 
 All notable changes to this project are documented here.
 
+## [0.3.0] - 2026-11-09
+
+Terminal background synchronization.
+
+### Added
+
+- Query terminal background using Vim's `t_RB` and `v:termrbgresp`.
+- Parse OSC 11 `rgb:` and `#rrggbb` background responses.
+- Synchronize the terminal default background with the active JB editor
+  background.
+- Restore the original background when Vim exits, suspends, or switches to a
+  different colour scheme.
+- Reapply the background after `VimResume` and terminal background responses.
+- `g:jb_manage_terminal_background` opt-out configuration.
+- Unit and integration coverage for parsing, lifecycle and idempotency.
+
+### Fixed
+
+- Termux background-color-erase gaps no longer require editing
+  `~/.termux/colors.properties`.
+- Repeated `ColorScheme` and `TermResponseAll` events no longer emit duplicate
+  background updates.
+
+### Verified
+
+- 95.9% profiled line coverage.
+- 100% function coverage (25/25).
+- Full unit and integration suite passes.
+
 ## [0.2.0] - 2026-11-09
 
 L4 engineering baseline.

@@ -245,6 +245,21 @@ the margin.
     Type: |Number|
     Default: 0
 
+------------------------------------------------------------------------------
+
+g:jb_manage_terminal_background~         *g:jb_manage_terminal_background*
+
+Synchronize the terminal default background with the editor background while
+Vim is active. The original terminal background is restored when Vim exits,
+suspends or switches away from the `jb` colour scheme.
+
+This requires a terminal that supports OSC 11 background colour responses and
+the Vim |echoraw()| function. Unsupported terminals are left unchanged.
+
+    Type: |Number|
+    Options: 0, 1
+    Default: 1
+
 
 ==============================================================================
 FAQ                                                                *jb-faq*
