@@ -16,8 +16,8 @@ let s:arrow = jb#ui#build_listchars(s:defaults)
 call assert_match('leadmultispace:·', s:arrow)
 call assert_match('space:·', s:arrow)
 call assert_match('trail:·', s:arrow)
-call assert_match('leadtab:→ ', s:arrow)
-call assert_match('tab:→ ', s:arrow)
+call assert_match("leadtab:→\u00a0", s:arrow)
+call assert_match("tab:→\u00a0", s:arrow)
 call assert_match('nbsp:␣', s:arrow)
 
 let s:partial = jb#ui#normalize_config({
@@ -28,18 +28,18 @@ let s:partial = jb#ui#normalize_config({
       \ 'tab': 'triangle',
       \ })
 let s:partial_chars = jb#ui#build_listchars(s:partial)
-call assert_match('leadmultispace: ', s:partial_chars)
+call assert_match("leadmultispace:\u00a0", s:partial_chars)
 call assert_match('space:·', s:partial_chars)
-call assert_match('trail: ', s:partial_chars)
-call assert_match('leadtab:  ', s:partial_chars)
-call assert_match('tab:▸ ', s:partial_chars)
-call assert_match('nbsp: ', s:partial_chars)
+call assert_match("trail:\u00a0", s:partial_chars)
+call assert_match("leadtab:\u00a0\u00a0", s:partial_chars)
+call assert_match("tab:▸\u00a0", s:partial_chars)
+call assert_match("nbsp:\u00a0", s:partial_chars)
 
 call assert_match(
-      \ 'tab:─ ',
+      \ "tab:─\u00a0",
       \ jb#ui#build_listchars(jb#ui#normalize_config({'tab': 'line'})))
 call assert_match(
-      \ 'tab:  ',
+      \ "tab:\u00a0\u00a0",
       \ jb#ui#build_listchars(jb#ui#normalize_config({'tab': 'none'})))
 call assert_match(
       \ 'conceal:…',
