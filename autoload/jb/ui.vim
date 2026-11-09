@@ -182,6 +182,7 @@ endfunction
 let s:original_background = ''
 let s:terminal_target = ''
 let s:terminal_managed = 0
+let s:terminal_applied_color = ''
 
 function! s:terminal_response() abort
   if get(v:, 'testing', 0) && exists('g:jb_test_terminal_background_response')
@@ -217,6 +218,9 @@ function! jb#ui#configure_terminal_background(target) abort
   endif
 
   let s:terminal_target = a:target
+  if s:terminal_managed && s:terminal_applied_color ==? a:target
+    return ''
+  endif
   let l:response = s:terminal_response()
   if empty(l:response)
     if !empty(&t_RB)
@@ -237,6 +241,7 @@ function! jb#ui#configure_terminal_background(target) abort
   if !empty(l:sequence)
     call s:terminal_emit(l:sequence)
     let s:terminal_managed = 1
+    let s:terminal_applied_color = a:target
   endif
   return l:sequence
 endfunction
@@ -248,6 +253,7 @@ function! jb#ui#restore_terminal_background() abort
   let l:sequence = jb#ui#terminal_background_sequence(s:original_background)
   call s:terminal_emit(l:sequence)
   let s:terminal_managed = 0
+  let s:terminal_applied_color = ''
   return l:sequence
 endfunction
 
