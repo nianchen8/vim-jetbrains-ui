@@ -81,6 +81,24 @@ endfunction
 
 function! jb#ui#build_listchars(config) abort
   let l:unicode = s:use_unicode_markers(a:config)
+  if !l:unicode
+    let l:ascii_items = []
+    if s:flag(a:config, 'leading') || s:flag(a:config, 'inner')
+      call add(l:ascii_items, 'space:.')
+      call add(l:ascii_items, 'tab:' . s:tab_marker(a:config, 0))
+    endif
+    if s:flag(a:config, 'trailing')
+      call add(l:ascii_items, 'trail:.')
+    endif
+    call add(l:ascii_items, 'extends:>')
+    call add(l:ascii_items, 'precedes:<')
+    let l:extra = get(a:config, 'extra', '')
+    if !empty(l:extra)
+      call add(l:ascii_items, l:extra)
+    endif
+    return join(l:ascii_items, ',')
+  endif
+
   let l:blank = s:blank_marker(l:unicode)
   let l:dot = l:unicode ? get(a:config, 'space_char', '·') : '.'
   let l:tab = s:tab_marker(a:config, l:unicode)
