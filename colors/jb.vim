@@ -77,7 +77,7 @@ call s:h("JBHyperlink", { "fg": s:colors.link, "gui": "underline", "cterm": "und
 call s:h("JBTodo", { "fg": s:colors.todo }) " TODOs
 call s:h("JBSearchResult", { "bg": s:colors.search }) " Search results
 call s:h("JBFoldedText", { "fg": s:colors.comment, "bg": s:colors.folded }) " Folded text
-call s:h("JBError", { "gui": "underline",  "cterm": "undercurl", "sp": s:colors.err, "ctermul": "red" }) " Doesn't match JB exactly, can't do seperate color undercurls in terminal
+call s:h("JBError", { "gui": "undercurl", "cterm": "undercurl", "sp": s:colors.err, "ctermul": "red" })
 call s:h("JBWarning", { "gui": "undercurl", "cterm": "undercurl", "sp": s:colors.warning, "ctermul": "yellow" })
 call s:h("JBCursor", { "fg": s:colors.editor, "bg": s:colors.cursor }) " Cursor
 
@@ -194,7 +194,7 @@ highlight! link MatchParen JBMatchedBracket
 highlight! link Title Constant
 
 " --- Diff and Merge ---
-highlight! link Added JJBGutterAddedLine
+highlight! link Added JBGutterAddedLine
 highlight! link Changed JBGutterChangedLine
 highlight! link DiffAdd JBDiffAddedLine
 highlight! link DiffChange JBDiffChangedLine
