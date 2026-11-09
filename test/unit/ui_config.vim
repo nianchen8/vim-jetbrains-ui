@@ -52,16 +52,16 @@ let s:ascii = jb#ui#build_listchars(
       \   'trailing': 0,
       \   'markers': 'ascii',
       \ }))
-call assert_match('leadmultispace: ', s:ascii)
+call assert_match('leadmultispace:-', s:ascii)
 call assert_match('space:.', s:ascii)
-call assert_match('trail: ', s:ascii)
-call assert_match('tab:> ', s:ascii)
+call assert_match('trail:-', s:ascii)
+call assert_match('tab:>-', s:ascii)
 let s:ascii_line = jb#ui#build_listchars(
       \ jb#ui#normalize_config({'markers': 'ascii', 'tab': 'line'}))
 let s:ascii_none = jb#ui#build_listchars(
       \ jb#ui#normalize_config({'markers': 'ascii', 'tab': 'none'}))
-call assert_match('tab:- ', s:ascii_line)
-call assert_match('tab:  ', s:ascii_none)
+call assert_match('tab:--', s:ascii_line)
+call assert_match('tab:--', s:ascii_none)
 let s:auto = jb#ui#build_listchars(
       \ jb#ui#normalize_config({'markers': 'auto'}))
 call assert_match('space:', s:auto)
