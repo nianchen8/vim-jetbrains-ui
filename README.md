@@ -2,7 +2,7 @@
     <img src="assets/logo.png" width="75" alt="Logo"/>
     <h3>JB for Vim</h3>
     <p>JetBrains editor visual compatibility for traditional Vim.</p>
-    <p><strong>Version 0.1.0 · Pre-release</strong></p>
+    <p><strong>Version 0.2.0 · L4 pre-release baseline</strong></p>
 </div>
 
 ![Theme Screenshot](assets/screenshot.png)
@@ -11,8 +11,9 @@ Version
 ---------------------------------------------------------------------------
 
 This repository is a maintained derivative of
-[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.1.0`
-establishes the current JetBrains editor-visual baseline.
+[`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.2.0`
+establishes the L4 engineering baseline: cross-version CI, compatibility
+testing, visual contracts, external plugin integration and release metadata.
 
 The palette was checked against the IntelliJ Platform 2026.3 editor source.
 The project targets traditional Vim and has been tested with Vim 9.2.
@@ -173,12 +174,12 @@ Run Vim's profiler and enforce the coverage gate:
 ./test/coverage.sh
 ```
 
-Version `0.1.0` test status:
+Version `0.2.0` test status:
 
 ```text
 Unit suites:          1
-Integration suites:   5
-Profiled line cover:  98.8%
+Integration suites:   11
+Profiled line cover:  98.6%
 Function coverage:    100% (14/14)
 Coverage gate:        >= 95% lines and 100% functions
 ```
@@ -191,6 +192,7 @@ Compatibility and limitations
 ---------------------------------------------------------------------------
 
 - Target: traditional Vim; Vim 9.2 is the tested environment.
+- CI compatibility matrix: Vim `v9.2.0000`, stable and nightly.
 - Neovim is not a supported target for this release.
 - Truecolor is recommended. A 256-colour fallback remains available.
 - Terminal fonts, ligatures, line height and cursor animation are controlled by
@@ -213,6 +215,20 @@ Upstream
 - Original project: <https://github.com/devsjc/vim-jb>
 - Git remote name: `upstream`
 - Current local branch: `main`
+
+Quality
+---------------------------------------------------------------------------
+
+- Unit and integration test suites.
+- Real Python, C++ and Markdown fixture files.
+- Text-based visual contract snapshots for Dark and Light themes.
+- 256-colour fallback tests.
+- Optional `vim-cpp-modern` and Coc integration tests.
+- GitHub Actions compatibility matrix and external-integration job.
+- Release metadata consistency check across `VERSION`, README, CHANGELOG and
+  the exact checked-out Git tag.
+
+The detailed L4 acceptance matrix is in [QUALITY.md](QUALITY.md).
 
 Related terminal themes:
 

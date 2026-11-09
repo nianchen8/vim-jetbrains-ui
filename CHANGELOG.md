@@ -2,6 +2,36 @@
 
 All notable changes to this project are documented here.
 
+## [0.2.0] - 2026-11-09
+
+L4 engineering baseline.
+
+### Added
+
+- GitHub Actions matrix for Vim 9.2, stable and nightly.
+- Separate CI job for `vim-cpp-modern` and Coc integration.
+- 256-colour fallback tests.
+- Real Python, C++ and Markdown fixture tests.
+- Dark and Light visual contract snapshots.
+- Minimum feature checks for supported Vim builds.
+- Release metadata consistency validation.
+- Lint entry point for shell, JavaScript, JSON and release metadata.
+
+### Verified
+
+- Vim 9.2 with truecolor and 256-colour rendering.
+- All local unit and integration suites pass.
+- Optional `vim-cpp-modern` integration passes locally.
+- Optional Coc integration passes locally.
+- 98.6% profiled line coverage.
+- 100% function coverage (14/14).
+
+### Notes
+
+- The GitHub Actions workflow is committed but cannot execute until this
+  repository is pushed to a GitHub `origin`.
+- Visual contracts are attribute snapshots, not pixel screenshots.
+
 ## [0.1.0] - 2026-11-09
 
 Initial pre-release baseline for the maintained local derivative.
