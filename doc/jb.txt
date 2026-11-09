@@ -163,7 +163,87 @@ Example:
         \ 'type': {'gui': '#00ff00', 'cterm': 46},
         \ }
 <
-The available categories can be found in `/path/to/vim-jb/colors/palettes.json`.
+The available categories can be found in
+`/path/to/vim-jb/autoload/palettes.json`.
+
+------------------------------------------------------------------------------
+
+g:jb_whitespace~                                         *g:jb_whitespace*
+
+Controls the JetBrains-style whitespace markers. Vim can approximate leading,
+inner and trailing whitespace independently. It cannot independently enable
+markers only inside a selection.
+
+    Type: |Dictionary|
+    Default: all scopes enabled, tab style `arrow`
+
+    Keys:
+      enabled       Master switch
+      leading       Leading spaces and tabs
+      inner         Spaces and tabs inside a line
+      trailing      Trailing spaces
+      nbsp          Non-breaking spaces
+      tab           `arrow`, `triangle`, `line`, or `none`
+      space_char    Marker used for spaces
+      nbsp_char     Marker used for non-breaking spaces
+      extends       Marker for text extending past the window
+      precedes      Marker for text preceding the window
+      extra         Extra `listchars` entry
+
+Example:
+>
+    let g:jb_whitespace = {
+        \ 'enabled': 1,
+        \ 'leading': 1,
+        \ 'inner': 1,
+        \ 'trailing': 1,
+        \ 'nbsp': 1,
+        \ 'tab': 'arrow',
+        \ }
+<
+Commands are available while Vim is running:
+>
+    :JBWhitespaceOn
+    :JBWhitespaceOff
+    :JBWhitespaceToggle
+    :JBWhitespaceStatus
+<
+------------------------------------------------------------------------------
+
+g:jb_soft_wrap~                                         *g:jb_soft_wrap*
+
+Enables JetBrains-style soft wrapping for selected file types.
+
+    Type: |Dictionary|
+    Default: disabled
+
+Example:
+>
+    let g:jb_soft_wrap = {
+        \ 'enabled': 1,
+        \ 'filetypes': ['markdown', 'text'],
+        \ 'showbreak': '↳ ',
+        \ }
+<
+------------------------------------------------------------------------------
+
+g:jb_cursorline~                                         *g:jb_cursorline*
+
+Whether the current editor line should be highlighted.
+
+    Type: |Number|
+    Options: 0, 1
+    Default: 1
+
+------------------------------------------------------------------------------
+
+g:jb_right_margin~                                     *g:jb_right_margin*
+
+Column at which to display the JetBrains-style right margin. Set to 0 to hide
+the margin.
+
+    Type: |Number|
+    Default: 0
 
 
 ==============================================================================

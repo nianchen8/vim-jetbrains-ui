@@ -133,22 +133,33 @@ fully reproduced by a Vim colour scheme.
 | Terminal emulator | Font, ligatures, line height, cursor and colour support |
 | Auxiliary Vim plugins | Indent guides, sticky navigation, breadcrumbs, etc. |
 
-## 5. Current gaps
+## 5. Local implementation status
 
-Known gaps in the pinned `vim-jb` baseline:
+Implemented in the local branch:
 
-- Whitespace colour is not taken from current JetBrains `WHITESPACES_COLOR`.
-- Tab marker shape is not configurable to JetBrains modes.
-- Leading, inner, trailing and selection whitespace are not independently
-  configurable.
-- Caret row and selection colours do not match current JetBrains defaults.
-- Line-number colours do not match current JetBrains defaults.
-- Indent guides and soft-wrap markers are not implemented.
-- Markdown references a missing `Const` highlight group.
-- Markdown code/blockquote styling predates JetBrains 2026 changes.
-- Light mode forces `background=dark`.
-- Documentation comments and constants do not reproduce current italic styles.
-- Python decorator colour uses the generic Tag colour instead of Metadata.
+- Current JetBrains editor background, foreground, caret row and selection.
+- Current ordinary and caret-row line-number colours.
+- Current whitespace colour (`WHITESPACES_COLOR`).
+- Configurable leading, inner and trailing whitespace.
+- Configurable arrow, triangle, horizontal-line and hidden tab markers.
+- Current matched-brace and right-margin colours.
+- Current Markdown code block/span background.
+- Markdown heading and FZF header no longer reference a missing `Const` group.
+- Documentation comments and constants use JetBrains italic styling.
+- Light mode now selects `background=light`.
+- Markdown/text soft wrapping with a visible continuation marker.
+- A configurable right margin.
+
+Remaining approximations and gaps:
+
+- Whitespace inside a selection cannot be toggled independently.
+- U+3000 IDEOGRAPHIC SPACE is not natively distinguishable by `listchars`.
+- Space dots and tab arrows are terminal glyph approximations of JetBrains'
+  vector drawing.
+- Indent guides require a separate Vim plugin or a future renderer layer.
+- Smooth caret movement, animated scrolling and variable line height cannot be
+  provided by the colour scheme.
+- Python decorator colour still uses the generic Tag group.
 
 ## 6. Source references
 

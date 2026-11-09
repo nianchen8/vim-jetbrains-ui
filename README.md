@@ -153,3 +153,18 @@ Contribution and support
 
 Enjoy the theme? Give it a star on GitHub! Feel free to create pull
 requests with any new highlight rules that have been missed.
+
+Testing
+---------------------------------------------------------------------------
+
+Run the unit and integration suites:
+
+```sh
+./test/run.sh
+```
+
+Run the Vim profiler and enforce the line/function coverage gate:
+
+```sh
+./test/coverage.sh
+```
