@@ -13,6 +13,7 @@ command! JBWhitespaceStatus call jb#ui#status()
 augroup JBEditorUI
   autocmd!
   autocmd ColorScheme * call jb#ui#apply()
+  autocmd FileType * call jb#ui#apply_buffer()
 augroup END
 
 call jb#ui#apply()

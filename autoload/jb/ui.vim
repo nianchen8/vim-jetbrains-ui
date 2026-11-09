@@ -76,6 +76,42 @@ function! jb#ui#apply() abort
   else
     set nolist
   endif
+
+  if get(g:, 'jb_cursorline', 1)
+    set cursorline
+    if exists('+cursorlineopt')
+      set cursorlineopt=both
+    endif
+  else
+    set nocursorline
+  endif
+
+  let l:margin = get(g:, 'jb_right_margin', 0)
+  if type(l:margin) == v:t_number && l:margin > 0
+    let &colorcolumn = string(l:margin)
+  else
+    set colorcolumn=
+  endif
+endfunction
+
+function! jb#ui#apply_buffer() abort
+  let l:config = get(g:, 'jb_soft_wrap', {})
+  if type(l:config) != v:t_dict || !get(l:config, 'enabled', 0)
+    return
+  endif
+
+  let l:filetypes = get(l:config, 'filetypes', ['markdown'])
+  if index(l:filetypes, &filetype) < 0
+    setlocal nolinebreak
+    setlocal showbreak=
+    return
+  endif
+
+  setlocal wrap linebreak
+  if exists('+breakindent')
+    setlocal breakindent
+  endif
+  let &l:showbreak = get(l:config, 'showbreak', '↳ ')
 endfunction
 
 function! jb#ui#set(key, value) abort

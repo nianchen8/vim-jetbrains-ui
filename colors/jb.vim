@@ -10,7 +10,6 @@
 " === Initializaion ==================================================================
 
 highlight clear
-set cursorline
 
 if exists("syntax_on")
   syntax reset
