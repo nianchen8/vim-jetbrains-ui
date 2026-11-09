@@ -41,7 +41,11 @@ function! s:use_unicode_markers(config) abort
 
   let l:original = &listchars
   try
-    let &listchars = 'space:·,tab:→' . "\u00a0"
+    let &listchars =
+          \ 'leadmultispace:·,space:·,trail:·,' .
+          \ 'leadtab:→' . "\u00a0" .
+          \ ',tab:→' . "\u00a0" .
+          \ ',nbsp:␣,extends:›,precedes:‹'
     return 1
   catch /^Vim\%((\a\+)\)\=:E\%(474\|1512\):/
     return 0
