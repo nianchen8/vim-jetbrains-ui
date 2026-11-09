@@ -73,14 +73,14 @@ endfunction
 " === JETBRAINS COLOR GROUPS ==========================================================
 
 " General
-call s:h("JBDefault", { "fg": s:colors.text }) " Standard text
+call s:h("JBDefault", { "fg": s:colors.text, "bg": s:colors.editor }) " Standard text
 call s:h("JBHyperlink", { "fg": s:colors.link, "gui": "underline", "cterm": "underline" })
 call s:h("JBTodo", { "fg": s:colors.todo }) " TODOs
 call s:h("JBSearchResult", { "bg": s:colors.search }) " Search results
 call s:h("JBFoldedText", { "fg": s:colors.comment, "bg": s:colors.folded }) " Folded text
 call s:h("JBError", { "gui": "underline",  "cterm": "undercurl", "sp": s:colors.err, "ctermul": "red" }) " Doesn't match JB exactly, can't do seperate color undercurls in terminal
 call s:h("JBWarning", { "gui": "undercurl", "cterm": "undercurl", "sp": s:colors.warning, "ctermul": "yellow" })
-call s:h("JBCursor", { "fg": s:colors.editor, "bg": s:colors.comment }) " Cursor
+call s:h("JBCursor", { "fg": s:colors.editor, "bg": s:colors.cursor }) " Cursor
 
 " Language defaults
 call s:h("JBString", { "fg": s:colors.string }) " Strings
@@ -94,9 +94,17 @@ call s:h("JBDocComment", { "fg": s:colors.doccomment }) " Documentation comments
 call s:h("JBConstant", { "fg": s:colors.const }) " Constants
 call s:h("JBType", { "fg": s:colors.type }) " Types
 call s:h("JBTag", { "fg": s:colors.tag }) " Tags
-call s:h("JBMatchedBracket", { "fg": s:colors.text, "bg": s:colors.folded, "gui": "bold", "cterm": "bold" }) " Matching brackets
+call s:h("JBMatchedBracket", { "fg": s:colors.text, "bg": s:colors.matchedbrace, "gui": "bold", "cterm": "bold" }) " Matching brackets
 call s:h("JBStruct", { "fg": s:colors.struct })
 call s:h("JBVirtualText", { "fg": s:colors.virtual }) " Virtual text
+call s:h("JBCurrentLine", { "bg": s:colors.caretrow }) " Current editor line
+call s:h("JBSelection", { "bg": s:colors.selection }) " Selected text
+call s:h("JBLineNr", { "fg": s:colors.linenr }) " Ordinary line numbers
+call s:h("JBCurrentLineNr", { "fg": s:colors.linenrcurrent }) " Line number at caret
+call s:h("JBWhitespace", { "fg": s:colors.whitespace }) " Spaces, tabs and whitespace markers
+call s:h("JBIndentGuide", { "fg": s:colors.indentguide }) " Indentation guides
+call s:h("JBRightMargin", { "bg": s:colors.rightmargin }) " Right margin / visual guide
+call s:h("JBSearchCurrent", { "bg": s:colors.searchcurrent }) " Current search result
 
 " Diff and Merge
 call s:h("JBDiffAddedLine", { "bg": s:colors.diffadd }) " Newly inserted lines in diff
@@ -112,8 +120,8 @@ call s:h("JBGutterLineNr", { "fg": s:colors.virtual }) " Line numbers in gutter
 
 " UI
 call s:h("JBEditorBG", { "bg": s:colors.editor }) " Editor background
-call s:h("JBTree", { "fg": s:colors.text, "bg": s:colors.folded }) " Tree text
-call s:h("JBTreeBG", { "bg": s:colors.folded }) " Tree background
+call s:h("JBTree", { "fg": s:colors.text, "bg": s:colors.panel }) " Tree text
+call s:h("JBTreeBG", { "bg": s:colors.panel }) " Tree background
 call s:h("JBDivider", { "fg": s:colors.diffdel }) " Divider between panes
 
 " === VIM HIGHLIGHT GROUPS ============================================================
@@ -161,23 +169,27 @@ highlight! link Debug Tag
 
 " --- Text ---
 highlight! link Cursor JBCursor
-highlight! link LineNr JBGutterLineNr 
-highlight! link CursorLineNr JBCommentRef
+highlight! link LineNr JBLineNr
+highlight! link LineNrAbove LineNr
+highlight! link LineNrBelow LineNr
+highlight! link CursorLineNr JBCurrentLineNr
 highlight! link NormalNC Normal
 highlight! link Folded JBFoldedText
 highlight! link FoldColumn Folded
 highlight! link SignColumn Normal
 highlight! link Search JBSearchResult
-highlight! link IncSearch JBDiffChangedText
-highlight! link CurSearch IncSearch
-highlight! link ColorColumn JBTreeBG
+highlight! link IncSearch JBSearchCurrent
+highlight! link CurSearch JBSearchCurrent
+highlight! link ColorColumn JBRightMargin
 highlight! link Conceal JBGutterLineNr
 highlight! link vCursor Cursor
 highlight! link iCursor Cursor
 highlight! link lCursor Cursor
 highlight! link CursorIM Cursor
-highlight! link CursorLine JBTreeBG
-highlight! link CursorColumn CursorLine
+highlight! link CursorLine JBCurrentLine
+highlight! link CursorColumn JBCurrentLine
+highlight! link CursorLineSign CursorLine
+highlight! link CursorLineFold CursorLine
 highlight! link MatchParen JBMatchedBracket
 highlight! link Title Constant
 
@@ -208,8 +220,9 @@ highlight! link SpellCap Underline
 highlight! link SpellRare Underline
 highlight! link SpellLocal Underline
 highlight! link NonText LineNr
-highlight! link WhiteSpace LineNr
-highlight! link SpecialKey LineNr
+highlight! link WhiteSpace JBWhitespace
+highlight! link Whitespace JBWhitespace
+highlight! link SpecialKey JBWhitespace
 
 " --- UI ---
 highlight! link Pmenu JBTree
@@ -235,8 +248,8 @@ highlight! link WinSeparator VertSplit
 highlight! link ToolbarButton Cursor
 
 " Visual mode
-call s:h("Visual", { "bg": s:colors.folded }) "Visual selection
-call s:h("VisualNOS", { "bg": s:colors.folded, "gui": "underline", "cterm":  "underline" }) "Visual selection
+call s:h("Visual", { "bg": s:colors.selection }) "Visual selection
+call s:h("VisualNOS", { "bg": s:colors.selection, "gui": "underline", "cterm":  "underline" }) "Visual selection
 call s:h("QuickFixLine", { "fg": s:colors.link, "gui": "bold", "cterm": "bold" }) "Quickfix selected line
 highlight! link Debug Tag
 call s:h("debugBreakpoint", { "fg": s:colors.text, "bg": s:colors.err1 }) "Debug
@@ -504,4 +517,8 @@ endif
 
 " Must appear at the end of the file to work around this oddity:
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
-set background=dark
+if s:config.style ==# 'light'
+  set background=light
+else
+  set background=dark
+endif
