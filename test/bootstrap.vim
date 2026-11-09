@@ -6,6 +6,7 @@ silent! syntax on
 let s:root = expand('<sfile>:p:h:h')
 execute 'set runtimepath^=' . fnameescape(s:root)
 let g:jb_test_root = s:root
+let g:jb_manage_terminal_background = 0
 
 function! JBTestAttrMode(group, attr, mode) abort
   return synIDattr(synIDtrans(hlID(a:group)), a:attr, a:mode)

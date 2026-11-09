@@ -6,7 +6,11 @@ call assert_equal(
 call assert_equal(
       \ '#abc123',
       \ jb#ui#parse_terminal_background("\e]11;#ABC123\e\\"))
+call assert_equal(
+      \ '#aabbcc',
+      \ jb#ui#parse_terminal_background("\e]11;rgb:a/b/c\e\\"))
 call assert_equal('', jb#ui#parse_terminal_background('invalid'))
+call assert_equal('', jb#ui#parse_terminal_background([]))
 
 call assert_equal(
       \ "\e]11;#1E1F22\e\\",

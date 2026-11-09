@@ -522,3 +522,5 @@ if s:config.style ==# 'light'
 else
   set background=dark
 endif
+
+call jb#ui#configure_terminal_background(s:colors.editor.gui)

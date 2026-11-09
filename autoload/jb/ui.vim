@@ -178,3 +178,94 @@ function! jb#ui#terminal_background_update(target, response) abort
   endif
   return jb#ui#terminal_background_sequence(a:target)
 endfunction
+
+let s:original_background = ''
+let s:terminal_target = ''
+let s:terminal_managed = 0
+
+function! s:terminal_response() abort
+  if get(v:, 'testing', 0) && exists('g:jb_test_terminal_background_response')
+    return g:jb_test_terminal_background_response
+  endif
+  return get(v:, 'termrbgresp', '')
+endfunction
+
+function! s:terminal_emit(sequence) abort
+  if get(v:, 'testing', 0) && exists('g:JBTestTerminalBackgroundEmitter')
+    call call(g:JBTestTerminalBackgroundEmitter, [a:sequence])
+    return
+  endif
+  call echoraw(a:sequence)
+endfunction
+
+function! s:can_manage_terminal_background() abort
+  if !get(g:, 'jb_manage_terminal_background', 1)
+    return 0
+  endif
+  if get(v:, 'testing', 0)
+    return 1
+  endif
+  return !has('gui_running') &&
+        \ exists('*echoraw') &&
+        \ $TERM !=# 'dumb'
+endfunction
+
+function! jb#ui#configure_terminal_background(target) abort
+  if !s:can_manage_terminal_background()
+    let s:terminal_target = ''
+    return ''
+  endif
+
+  let s:terminal_target = a:target
+  let l:response = s:terminal_response()
+  if empty(l:response)
+    if !empty(&t_RB)
+      call s:terminal_emit(&t_RB)
+    endif
+    return ''
+  endif
+
+  let l:original = jb#ui#parse_terminal_background(l:response)
+  if empty(l:original)
+    return ''
+  endif
+  if empty(s:original_background)
+    let s:original_background = l:original
+  endif
+
+  let l:sequence = jb#ui#terminal_background_update(a:target, l:response)
+  if !empty(l:sequence)
+    call s:terminal_emit(l:sequence)
+    let s:terminal_managed = 1
+  endif
+  return l:sequence
+endfunction
+
+function! jb#ui#restore_terminal_background() abort
+  if !s:terminal_managed || empty(s:original_background)
+    return ''
+  endif
+  let l:sequence = jb#ui#terminal_background_sequence(s:original_background)
+  call s:terminal_emit(l:sequence)
+  let s:terminal_managed = 0
+  return l:sequence
+endfunction
+
+function! jb#ui#handle_terminal_response(kind) abort
+  if a:kind !=# 'background'
+    return
+  endif
+  if get(g:, 'colors_name', '') ==# 'jb' && !empty(s:terminal_target)
+    call jb#ui#configure_terminal_background(s:terminal_target)
+  endif
+endfunction
+
+function! jb#ui#handle_color_scheme() abort
+  if get(g:, 'colors_name', '') ==# 'jb'
+    if !empty(s:terminal_target)
+      call jb#ui#configure_terminal_background(s:terminal_target)
+    endif
+  else
+    call jb#ui#restore_terminal_background()
+  endif
+endfunction
