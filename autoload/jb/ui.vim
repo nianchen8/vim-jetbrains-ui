@@ -56,18 +56,18 @@ function! s:use_unicode_markers(config) abort
 endfunction
 
 function! s:blank_marker(unicode) abort
-  return a:unicode ? "\u00a0" : ' '
+  return a:unicode ? "\u00a0" : '-'
 endfunction
 
 function! s:tab_marker(config, unicode) abort
   let l:blank = s:blank_marker(a:unicode)
   if !a:unicode
     if get(a:config, 'tab', 'arrow') ==# 'line'
-      return '-' . l:blank
+      return '--'
     elseif get(a:config, 'tab', 'arrow') ==# 'none'
-      return l:blank . l:blank
+      return '--'
     endif
-    return '>' . l:blank
+    return '>-'
   endif
   if get(a:config, 'tab', 'arrow') ==# 'triangle'
     return '▸' . l:blank
