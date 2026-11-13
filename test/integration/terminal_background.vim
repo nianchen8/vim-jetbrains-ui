@@ -41,6 +41,17 @@ call assert_equal(
 call jb#ui#handle_color_scheme()
 call assert_equal(2, len(g:jb_test_terminal_background_emitted))
 
+let g:colors_name = 'jb-imported'
+call jb#ui#handle_terminal_response('background')
+call jb#ui#handle_color_scheme()
+call assert_equal(2, len(g:jb_test_terminal_background_emitted))
+
+let g:jb_imported_scheme = 'custom-import'
+let g:colors_name = 'custom-import'
+call jb#ui#handle_terminal_response('background')
+call jb#ui#handle_color_scheme()
+call assert_equal(2, len(g:jb_test_terminal_background_emitted))
+
 let g:colors_name = 'other'
 call jb#ui#handle_color_scheme()
 call assert_equal(
@@ -55,6 +66,7 @@ unlet g:jb_test_terminal_background_emitted
 unlet g:JBTestTerminalBackgroundEmitter
 unlet g:jb_manage_terminal_background
 unlet g:colors_name
+unlet g:jb_imported_scheme
 let &t_RB = s:original_t_rb
 
 call JBTestFinish()

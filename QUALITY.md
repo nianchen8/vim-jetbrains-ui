@@ -13,6 +13,7 @@ This document defines the L4 acceptance criteria for this repository.
 | Compatibility | Vim 9.1, 9.2, stable and nightly CI matrix | Pass |
 | Colour modes | Truecolor and 256-colour fallback | Pass |
 | External plugins | `vim-cpp-modern` and Coc | Pass |
+| Converter | `.icls` parsing, reports, Vim loading and C++ mapping | Pass |
 | Terminal background | OSC 11 apply and restore lifecycle | Pass |
 | Release metadata | `VERSION`, README, CHANGELOG and Git tag | Pass |
 | License | Repository-level MIT license | Pass |
@@ -29,6 +30,7 @@ This document defines the L4 acceptance criteria for this repository.
 | Vim stable | Latest stable release | Same local line | Pass |
 | Vim nightly | Forward compatibility | Not installed | Pass |
 | Vim + `vim-cpp-modern` | External syntax compatibility | Pass | Pass |
+| Generated scheme + `vim-cpp-modern` | Imported theme preserves C++ links | Pass | Pass |
 | Vim + Coc | Completion plugin highlight compatibility | Pass | Pass |
 | Termux OSC 11 | Background synchronization and restore | Pass by fake emitter tests | Device verification |
 

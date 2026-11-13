@@ -10,4 +10,9 @@ for test_file in "$repo_root"/test/unit/*.vim "$repo_root"/test/integration/*.vi
   vim -Nu NONE -i NONE -n -X -es -V1 -S "$test_file"
 done
 
+printf 'RUN Python converter tests\n'
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover \
+  -s "$repo_root/test" \
+  -p 'test_*.py'
+
 printf 'All tests passed.\n'

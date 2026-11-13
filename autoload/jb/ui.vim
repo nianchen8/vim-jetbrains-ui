@@ -320,13 +320,19 @@ function! jb#ui#handle_terminal_response(kind) abort
   if a:kind !=# 'background'
     return
   endif
-  if get(g:, 'colors_name', '') ==# 'jb' && !empty(s:terminal_target)
+  if s:is_jb_scheme() && !empty(s:terminal_target)
     call jb#ui#configure_terminal_background(s:terminal_target)
   endif
 endfunction
 
+function! s:is_jb_scheme() abort
+  let l:name = get(g:, 'colors_name', '')
+  return l:name =~# '^jb\%(-.*\)\?$' ||
+        \ get(g:, 'jb_imported_scheme', '') ==# l:name
+endfunction
+
 function! jb#ui#handle_color_scheme() abort
-  if get(g:, 'colors_name', '') ==# 'jb'
+  if s:is_jb_scheme()
     if !empty(s:terminal_target)
       call jb#ui#configure_terminal_background(s:terminal_target)
     endif

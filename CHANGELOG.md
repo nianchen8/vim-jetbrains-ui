@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented here.
 
+## [0.4.0] - 2026-11-13
+
+JetBrains editor color scheme import.
+
+### Added
+
+- Dependency-free JetBrains `.icls` to Vim color-scheme converter.
+- Local `baseAttributes` inheritance resolution and JSON conversion reports.
+- Generic syntax and common `vim-cpp-modern` C/C++ highlight projection.
+- Truecolor extraction with deterministic 256-colour approximation.
+- Generated-theme loading tests in traditional Vim.
+- Imported `jb-*` color schemes are included in terminal background lifecycle
+  handling.
+
 ## [0.3.1] - 2026-11-09
 
 Remote CI compatibility release.

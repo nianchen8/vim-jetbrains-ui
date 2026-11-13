@@ -2,7 +2,7 @@
     <img src="assets/logo.png" width="75" alt="Logo"/>
     <h3>Vim JetBrains UI</h3>
     <p>JetBrains editor visual compatibility for traditional Vim.</p>
-    <p><strong>Version 0.3.1 · L4 pre-release baseline</strong></p>
+    <p><strong>Version 0.4.0 · JetBrains scheme import</strong></p>
 </div>
 
 ![Theme Screenshot](assets/screenshot.png)
@@ -12,10 +12,10 @@ Version
 
 This is the public fork
 [`nianchen8/vim-jetbrains-ui`](https://github.com/nianchen8/vim-jetbrains-ui)
-of [`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.3.1`
-establishes the L4 engineering baseline: cross-version CI, compatibility
-testing, visual contracts, external plugin integration, terminal background
-synchronization and release metadata.
+of [`devsjc/vim-jb`](https://github.com/devsjc/vim-jb). Version `0.4.0` adds
+JetBrains `.icls` scheme import on top of the L4 engineering baseline:
+cross-version CI, compatibility testing, visual contracts, external plugin
+integration, terminal background synchronization and release metadata.
 
 The palette was checked against the IntelliJ Platform 2026.3 editor source.
 The project targets traditional Vim and has been tested with Vim 9.2.
@@ -184,13 +184,14 @@ Run Vim's profiler and enforce the coverage gate:
 ./test/coverage.sh
 ```
 
-Version `0.3.1` test status:
+Version `0.4.0` test status:
 
 ```text
 Unit suites:          2
 Integration suites:   13
-Profiled line cover:  96.6%
-Function coverage:    100% (27/27)
+Converter tests:      4
+Profiled line cover:  97.0%
+Function coverage:    100% (28/28)
 Coverage gate:        >= 95% lines and 100% functions
 ```
 
@@ -237,11 +238,50 @@ Quality
 - Text-based visual contract snapshots for Dark and Light themes.
 - 256-colour fallback tests.
 - Optional `vim-cpp-modern` and Coc integration tests.
+- Python converter tests with generated scheme loading in Vim.
 - GitHub Actions compatibility matrix and external-integration job.
 - Release metadata consistency check across `VERSION`, README, CHANGELOG and
   the exact checked-out Git tag.
 
 The detailed L4 acceptance matrix is in [QUALITY.md](QUALITY.md).
+
+Importing JetBrains color schemes
+---------------------------------------------------------------------------
+
+The repository includes a dependency-free converter for JetBrains editor
+color schemes:
+
+```sh
+./tools/jb_convert.py MyDark.icls \
+  --name jb-my-dark \
+  --output ~/.vim/colors/jb-my-dark.vim \
+  --report jb-my-dark-report.json
+```
+
+Then select the generated scheme normally:
+
+```vim
+colorscheme jb-my-dark
+```
+
+The converter:
+
+- reads JetBrains `.icls` XML;
+- resolves local `baseAttributes` inheritance;
+- extracts foreground, background, font style and effect settings;
+- maps generic syntax roles plus common `vim-cpp-modern` C/C++ groups;
+- calculates a 256-colour fallback from truecolor;
+- writes a JSON report for resolved roles and unresolved attributes.
+
+This first version imports an editor color scheme only. It does not import
+JetBrains window chrome, icons, fonts, or editor behaviour. A custom scheme
+that inherits values from a parent scheme must include those inherited
+attributes in the export, or the missing values will appear in the report.
+
+The project does not bundle third-party `.icls` files. Generated schemes
+should follow the license of the source theme. See
+[doc/converter.md](doc/converter.md) for the conversion contract and mapping
+boundaries.
 
 Related terminal themes:
 
